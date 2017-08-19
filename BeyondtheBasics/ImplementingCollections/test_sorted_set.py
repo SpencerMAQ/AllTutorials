@@ -65,5 +65,37 @@ class TestSizeProtocol(unittest.TestCase):
         s = SortedSet([5, 5, 5, 5, 5])
         self.assertEqual(len(s), 1)
 
+class TestIterableProtocol(unittest.TestCase):
+
+    def setUp(self):
+        self.s = SortedSet([7, 2, 1, 3, 1, 20])
+        # expected: 1, 2, 3, 7, 20
+
+    def test_iter(self):
+        i = iter(self.s)
+        # if the Collection does sort, then 1 should
+        # be next
+        self.assertEqual(next(i), 1)
+        self.assertEqual(next(i), 2)
+        self.assertEqual(next(i), 3)
+        self.assertEqual(next(i), 7)
+        self.assertEqual(next(i), 20)
+        # lambda
+        # This is so that the assertion calls next(i) rather than
+        # our code calling next(i) and passing the result of that
+        # to the assertion
+        self.assertRaises(StopIteration, lambda: next(i))
+
+    def test_for_loop(self):
+        # expected: 1, 2, 3, 7, 20
+        index = 0
+        expected = [1, 2, 3, 7, 20]
+        # for item in self.s:
+        #     self.assertEqual(item, expected[index])
+        #     index += 1
+        for i, item in enumerate(self.s):
+            self.assertEqual(item, expected[i])
+
+
 if __name__ == '__main__':
     unittest.main()
