@@ -8,3 +8,4 @@ class SortedSet:
     # unittest would return four errors
 
     def __contains__(self, item):
+        return item in self._items
