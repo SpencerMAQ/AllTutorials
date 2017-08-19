@@ -43,3 +43,10 @@ class SortedSet:
         # It's logical that you'd wan't slice object to return
         # SortedSet object instead of generic lists
         return SortedSet(result) if isinstance(item, slice) else result
+
+    # The string rep of this class for debugging is basically garbage
+    # so you'd have to implement this for more info
+    def __repr__(self):
+        return 'SortedSet({})'.format(
+            repr(self._items) if self._items else ''
+        )
