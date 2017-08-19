@@ -43,5 +43,27 @@ class TestContainerProtocol(unittest.TestCase):
     def test_negative_not_contained(self):
         self.assertFalse(9 not in self.s)
 
+
+class TestSizeProtocol(unittest.TestCase):
+
+    # there are only 3 interesting number in
+    # com sci, 0, 1 and n
+    def test_empty(self):
+        s = SortedSet()
+        self.assertEqual(len(s), 0)
+
+    def test_one(self):
+        s = SortedSet([33])
+        self.assertEqual(len(s), 1)
+
+    def test_ten(self):
+        s = SortedSet(range(10))
+        self.assertEqual(len(s), 10)
+
+    # will fail if duplicates are not removed
+    def test_with_duplicates(self):
+        s = SortedSet([5, 5, 5, 5, 5])
+        self.assertEqual(len(s), 1)
+
 if __name__ == '__main__':
     unittest.main()
