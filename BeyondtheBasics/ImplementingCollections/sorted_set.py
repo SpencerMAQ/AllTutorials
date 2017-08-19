@@ -30,4 +30,16 @@ class SortedSet:
     # seq.count(item)
     # concatenation with + and *
     def __getitem__(self, item):
-        return self._items[item]
+        result = self._items[item]
+        # Tests for seeing what item is containing
+        # when a slice is called on it, instead of an index
+        print(item)
+        property(type(item))
+        # > would return things like
+        # .slice(2, 4, None)
+        # Fslice(10, 9329392392392329329, None)
+        # <type slice>
+
+        # It's logical that you'd wan't slice object to return
+        # SortedSet object instead of generic lists
+        return SortedSet(result) if isinstance(item, slice) else result

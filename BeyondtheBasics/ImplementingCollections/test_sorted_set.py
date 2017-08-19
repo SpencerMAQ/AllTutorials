@@ -125,6 +125,29 @@ class TestSequenceProtocol(unittest.TestCase):
         with self.assertRaises(IndexError):
             self.s[-6]
 
+    # Tests for Slicing
+    # Notice that writing these tests drives us to a DESIGN DECISION
+    # that slicing a SortedSet should return a SortedSet, not a list, or any
+    # unordered, unsorted collection
+
+    # By default(before vid 7, the slices return a list)
+    # To change this behavior, would need a more sophisticated __getitem__
+    # that detects whether it's being called with an index or a slice
+    # and acts accordingly
+    def test_slice_from_start(self):
+        self.assertEqual(self.s[:3], SortedSet([1, 4, 9]))
+
+    def test_slice_to_end(self):
+        self.assertEqual(self.s[3:], SortedSet([13, 15]))
+
+    def test_slice_empty(self):
+        self.assertEqual(self.s[10:], SortedSet())
+
+    def test_slice_arbitrary(self):
+        self.assertEqual(self.s[2:4], SortedSet([9, 13]))
+
+    def test_slice_full(self):
+        self.assertEqual(self.s[:], self.s)
 
 if __name__ == '__main__':
     unittest.main()
