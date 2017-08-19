@@ -17,7 +17,17 @@ class SortedSet:
         return len(self._items)
 
     # iterable protocol
+    # iterable = object where you can use iter() on
     def __iter__(self):
         # you can also use the generator form
         return iter(self._items)
 
+    # sequence protol
+    # 1. the object mmust be iterable, sized container
+    # elements access using square brackets
+    # slicing, reversed()
+    # seq.index(item)
+    # seq.count(item)
+    # concatenation with + and *
+    def __getitem__(self, item):
+        return self._items[item]
