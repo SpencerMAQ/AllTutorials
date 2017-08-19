@@ -50,3 +50,34 @@ class SortedSet:
         return 'SortedSet({})'.format(
             repr(self._items) if self._items else ''
         )
+
+    # specialize == (eqaulity operator)
+    # this is to ovverride the default setting that python
+    # == is the same as 'is', i.e. identity test rather than content
+    def __eq__(self, other):
+        # NOTE: do note however that test_type_mismatch still fails
+        # i.e. self.assertFalse(SortedSet([4, 5, 6]) == [4, 5, 6])
+        # return self._items == other._items
+
+        # a better implementation would be like this
+        # i.e. typechecking first, returning the special builtin singleton
+        # value not implemented if the types don't match
+        if not isinstance(other, SortedSet):
+            # notice that we return a NotImp object rather than
+            # raising a NotImplementedError
+
+            # in the runtime we use it to retry the comparison once
+            # with the arguments reversed......
+
+            # potentially giving a different implementation of __eq__ on another
+            # object a chance to respond
+            # If i understood this correctly, this simply means that if other != SortedSet
+            # that would return NotImplemented, causing that object to defer to its own __eq__
+            # implementation instead of this one
+            return NotImplemented
+        return self._items == other._items
+
+    def __ne__(self, other):
+        if not isinstance(other, SortedSet):
+            return NotImplemented
+        return self._items != other._items

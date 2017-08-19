@@ -148,6 +148,16 @@ class TestSequenceProtocol(unittest.TestCase):
 
     def test_slice_full(self):
         self.assertEqual(self.s[:], self.s)
+    # unittest would still have problems like
+    # SortedSet([1, 2]) != SortedSet([1, 2])
+    # that is because by default, python equality comparison (==) inherits from
+    # object, which is for REFERENCE equality i.e. 'is', are they the same object?
+
+    # In fact this is the default behavior for all objects in python
+    # unless == was specialized by the object
+    # i.e. by default == and 'is' are the same
+
+    # to override that, we must override ==
 
 
 class TestReprProtocol(unittest.TestCase):
@@ -159,6 +169,49 @@ class TestReprProtocol(unittest.TestCase):
     def test_repr_some(self):
         s = SortedSet([42, 40, 19])
         self.assertEqual(repr(s), 'SortedSet([19, 40, 42])')
+
+
+class TestEqualityProtocol(unittest.TestCase):
+
+    def test_positive_equal(self):
+        self.assertTrue(SortedSet([4, 5, 6]) == SortedSet([6, 5, 4]))
+
+    def test_negative_equal(self):
+        self.assertFalse(SortedSet([4, 5, 6]) == SortedSet([1, 2, 3]))
+
+    # object vs typical list
+    def test_type_mismatch(self):
+        self.assertFalse(SortedSet([4, 5, 6]) == [4, 5, 6])
+
+    # sanity check to make sure SortedSet() is equal to itself
+    def test_identical(self):
+        s = SortedSet([10, 11 ,12])
+        self.assertTrue(s == s)
+
+
+class TestInequalityProtocol(unittest.TestCase):
+    """
+    Note that in this case, we use != on all cases
+    regardless of the double negative
+    """
+
+    # note that these tests are passing by default
+    # indicating that python implements != by negating ==
+
+    # although that is the case, it is best practice to define __ne__
+    # as per python documentation because they are not nec. inverse
+    def Test_positive_unequal(self):
+        self.assertTrue(SortedSet([4, 5, 6]) != SortedSet([1, 2, 3]))
+
+    def Test_negative_unequal(self):
+        self.assertFalse(SortedSet([4, 5, 6]) != SortedSet([6, 5, 4]))
+
+    def Test_type_mismatch(self):
+        self.assertTrue(SortedSet([4, 5, 6]) != [1, 2, 3])
+
+    def Test_identical(self):
+        s = SortedSet([])
+        self.assertFalse(s != s)
 
 if __name__ == '__main__':
     unittest.main()
