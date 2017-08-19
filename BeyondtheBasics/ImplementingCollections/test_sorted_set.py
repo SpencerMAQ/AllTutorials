@@ -2,6 +2,7 @@ import unittest
 
 from sorted_set import SortedSet
 
+
 class TestConstruction(unittest.TestCase):
 
     def test_empty(self):
