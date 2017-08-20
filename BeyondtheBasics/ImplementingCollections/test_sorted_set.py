@@ -203,6 +203,7 @@ class TestSequenceProtocol(unittest.TestCase):
         s = SortedSet([1, 5, 5, 7, 9])
         self.assertEqual(s.count(5), 1)
 
+
 class TestReprProtocol(unittest.TestCase):
 
     def test_repr_empty(self):

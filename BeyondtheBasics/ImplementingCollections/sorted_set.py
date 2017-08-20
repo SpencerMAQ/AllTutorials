@@ -1,3 +1,4 @@
+from bisect import bisect_left
 from collections.abc import Sequence
 """
 In principle, we could already implement
@@ -117,3 +118,29 @@ class SortedSet(Sequence):
     # VID 11: Index method
     # no need to implement them directly, just inheirt from abc
     # The index method is a mixin when you inherit from it
+
+    # VID 13: Improving the performance of count()
+    # from O(N) to O(log n)
+    # s.count(i) returns only 0 or 1
+    # we also know that the list is always sorted
+    # So, we can perform a binary(0 1) search which is faster
+    # We don't have to write this from scratch because
+    # binary search is implemented in Python
+
+    def count(self, value):
+        # from bisect module
+        # searches for an item
+        # returns the index at which the requested item should
+        # be placed in the sequence
+
+        # only works if sorted
+        index = bisect_left(self._items, value)
+
+        # then perform two further tests
+        # first: returned index w/in the bounds of the collection
+        # second: whether there is already the rqd item at that index
+        found = (index != len(self._items) and (self._items[index] == value))
+        # NOTE to self, shouldn't that be index <= len(self._items)???
+
+        # then convert that bool into int
+        return int(found)
