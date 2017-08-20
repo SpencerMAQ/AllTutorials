@@ -3,6 +3,8 @@ class SortedSet:
     Only unique elements but ordered unlike a set
     """
     def __init__(self, items=None):
+        # Note that sorted() always returns a list, this class acts like a set but
+        # is essentially a class that creates a list-like object
         self._items = sorted(set(items)) if items is not None else []
 
     # container protocl "in"
