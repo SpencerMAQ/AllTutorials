@@ -90,3 +90,5 @@ class SortedSet:
     # instead. Python walks back through the sequence using the two
 
     # REVERSED PROTOCOL =======
+
+    # VID 11: Index, Count methods
