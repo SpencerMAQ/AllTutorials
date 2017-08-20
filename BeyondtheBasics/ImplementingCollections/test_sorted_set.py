@@ -184,7 +184,7 @@ class TestSequenceProtocol(unittest.TestCase):
 
     def test_index_negative(self):
         s = SortedSet([1, 5, 8, 9])
-        with self.assertRaises(ValueError)
+        with self.assertRaises(ValueError):
             s.index(15)
 
 

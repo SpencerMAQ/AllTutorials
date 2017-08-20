@@ -1,4 +1,25 @@
-class SortedSet:
+from collections.abc import Sequence
+"""
+In principle, we could already implement
+index() based on methods already in place
+such as __getitem__
+
+# https://docs.python.org/3.4/library/collections.abc.html
+That's not needed however since 
+Such default implementations are available in the py standard library
+Just check the base classes of the collections.abc module
+i.e. Container, Hashable, Iterable, SEQUENCE, etc.
+abc = abstract base class
+
+They serve to take some of the legwork of the collection protol implementation
+
+Note from the docs that if you've already implemented
+__getitem__ and __len__, contains, iter, reversed, index and count
+are MIXIN method unless overridden
+"""
+
+
+class SortedSet(Sequence):
     """
     Only unique elements but ordered unlike a set
     """
@@ -93,4 +114,6 @@ class SortedSet:
 
     # REVERSED PROTOCOL =======
 
-    # VID 11: Index, Count methods
+    # VID 11: Index method
+    # no need to implement them directly, just inheirt from abc
+    # The index method is a mixin when you inherit from it
