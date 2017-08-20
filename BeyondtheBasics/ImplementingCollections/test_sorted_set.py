@@ -187,7 +187,21 @@ class TestSequenceProtocol(unittest.TestCase):
         with self.assertRaises(ValueError):
             s.index(15)
 
+    # VID 12: Checking that collections.abc Sequence
+    # also implements count()
+    def test_count_zero(self):
+        s = SortedSet([1, 5, 5, 7, 9])
+        self.assertEqual(s.count(11), 0)
 
+
+    def test_count_one(self):
+        s = SortedSet([1, 5, 5, 7, 9])
+        self.assertEqual(s.count(9), 1)
+
+    # with duplicates from declaration
+    def test_count_dup_one(self):
+        s = SortedSet([1, 5, 5, 7, 9])
+        self.assertEqual(s.count(5), 1)
 
 class TestReprProtocol(unittest.TestCase):
 
