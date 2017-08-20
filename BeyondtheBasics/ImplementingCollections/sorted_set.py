@@ -81,3 +81,12 @@ class SortedSet:
         if not isinstance(other, SortedSet):
             return NotImplemented
         return self._items != other._items
+
+    # REVERSED PROTOCOL =======
+
+    # note that if __reversed__ is implement
+    # python uses that
+    # if not, it uses both __getitem__ and __len__
+    # instead. Python walks back through the sequence using the two
+
+    # REVERSED PROTOCOL =======

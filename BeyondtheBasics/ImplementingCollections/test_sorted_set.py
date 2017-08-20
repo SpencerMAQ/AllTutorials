@@ -159,6 +159,23 @@ class TestSequenceProtocol(unittest.TestCase):
 
     # to override that, we must override ==
 
+    # ##### ===========
+    # testing the reversed protocol
+    def test_reversed(self):
+        # note that if __reversed__ is implement
+        # python uses that
+        # if not, it uses both __getitem__ and __len__
+        # instead. Python walks back through the sequence using the two
+        s = SortedSet([1, 3, 5, 7])
+        r = reversed(s)
+        self.assertEqual(next(r), 7)
+        self.assertEqual(next(r), 5)
+        self.assertEqual(next(r), 3)
+        self.assertEqual(next(r), 1)
+        with self.assertRaises(StopIteration):
+            next(r)
+
+
 
 class TestReprProtocol(unittest.TestCase):
 
