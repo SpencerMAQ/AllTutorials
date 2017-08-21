@@ -34,7 +34,14 @@ class SortedSet(Sequence):
     # unittest would return four errors
 
     def __contains__(self, item):
-        return item in self._items
+        # return item in self._items
+        # VID 14: notice that:
+        # that found represents exactly the same result from __getitem__ (return item in self._items)
+        #     found = (index != len(self._items) and (self._items[index] == value))
+        # because of that, we replace the code in __contains__ to make it more efficient
+        index = bisect_left(self._items, item)
+        return index != len(self._items) and self._items[index] == item
+
 
     # sized protocol
     def __len__(self):
@@ -134,13 +141,33 @@ class SortedSet(Sequence):
         # be placed in the sequence
 
         # only works if sorted
-        index = bisect_left(self._items, value)
+        # >> index = bisect_left(self._items, value)
 
         # then perform two further tests
         # first: returned index w/in the bounds of the collection
         # second: whether there is already the rqd item at that index
-        found = (index != len(self._items) and (self._items[index] == value))
+        # >> found = (index != len(self._items) and (self._items[index] == value))
         # NOTE to self, shouldn't that be index <= len(self._items)???
 
         # then convert that bool into int
-        return int(found)
+        # >> return int(found)
+
+        # >> represents the original less efficient code
+
+        # this uses the enchanced __getitem__
+        return int(value in self._items)
+
+    # VID 14: notice that:
+    # that found represents exactly the same result from __getitem__
+    #     found = (index != len(self._items) and (self._items[index] == value))
+    # because of that, we replace the code in __contains__ to make it more efficient
+
+    # index() default is also inefficient since
+    # it doesn't know that our class is a Sorted Set
+
+    # Vid 14
+    def index(self, value, start=0, stop=None):
+        index = bisect_left(self._items, value)
+        if index != len(self._items) and (self._items[index] == value):
+            return index
+        raise ValueError('{} not found'.format(repr(value)))
