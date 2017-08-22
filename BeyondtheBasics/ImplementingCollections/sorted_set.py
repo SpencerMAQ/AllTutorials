@@ -1,5 +1,7 @@
 from bisect import bisect_left
 from collections.abc import Sequence
+from itertools import chain
+
 """
 In principle, we could already implement
 index() based on methods already in place
@@ -180,3 +182,19 @@ class SortedSet(Sequence):
 
     # is there any value in inheriting from Sequence then?
     # yes>
+
+    # VID 16: concatenation and repitition
+    def __add__(self, other):
+        # prefer lazy evaluation to simply concatenating them
+        return SortedSet(chain(self._items, other._items))
+
+    # repitition (number at left)
+    def __mul__(self, other):
+        return self if other > 0 else SortedSet()
+
+    # reversed multiplication (number at right)\
+    def __rmul__(self, other):
+        # you can do this:
+        # or to avoid code repitition, delegate to __mul__
+        # return self if other > 0 else SortedSet()
+        return self * other

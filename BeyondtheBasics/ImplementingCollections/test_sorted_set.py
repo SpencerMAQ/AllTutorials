@@ -223,6 +223,41 @@ class TestSequenceProtocol(unittest.TestCase):
     def test_protocol(self):
         self.assertTrue(issubclass(SortedSet, Sequence))
 
+    # VID 16: concatenation and repitition
+    def test_concatenate_disjoin(self):
+        s = SortedSet([1, 2, 3,])
+        t = SortedSet([4, 5, 6,])
+        self.assertEqual(s + t, SortedSet([1, 2, 3, 4, 5, 6]))
+
+    def test_concatenate_equal(self):
+        s = SortedSet([2, 4, 6])
+        self.assertEqual(s + s, s)
+
+    def test_concatenate_intersecting(self):
+        s = SortedSet([1, 2, 3])
+        t = SortedSet([3, 4, 5])
+        self.assertEqual(s + t, SortedSet([1, 2, 3, 4, 5]))
+
+    # Testing repitition
+    # since this is a set, it doesn't make sense to
+    # make duplicates of the members, so we simply
+    # return the set itself unless the repitition is zero
+    def test_repitition_zero_left(self):
+        s = SortedSet([4, 5, 6])
+        self.assertEqual(0 * s, SortedSet())
+
+    def test_repitition_nonzero_left(self):
+        s = SortedSet([4, 5, 6])
+        self.assertEqual(100 * s, s)
+
+    def test_repitition_zero_right(self):
+        s = SortedSet([4, 5, 6])
+        self.assertEqual(s * 0, SortedSet())
+
+    def test_repitition_nonzero_right(self):
+        s = SortedSet([4, 5, 6])
+        self.assertEqual(s * 100, s)
+
 
 class TestReprProtocol(unittest.TestCase):
 
