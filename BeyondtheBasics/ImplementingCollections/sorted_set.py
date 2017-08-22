@@ -171,3 +171,12 @@ class SortedSet(Sequence):
         if index != len(self._items) and (self._items[index] == value):
             return index
         raise ValueError('{} not found'.format(repr(value)))
+
+    # Vid 15
+    # No need for this because https://docs.python.org/3.4/library/collections.abc.html
+    # >>>> def __reversed__(self):
+    # note however that even if you remove the inheritance from Sequence,
+    # ... it'd still work because of __len__ and __getitem__
+
+    # is there any value in inheriting from Sequence then?
+    # yes>

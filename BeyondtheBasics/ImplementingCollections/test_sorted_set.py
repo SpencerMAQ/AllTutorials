@@ -1,4 +1,6 @@
 import unittest
+from collections.abc import (Container, Sized,
+                             Iterable, Sequence)
 
 from sorted_set import SortedSet
 
@@ -43,8 +45,13 @@ class TestContainerProtocol(unittest.TestCase):
     def test_negative_not_contained(self):
         self.assertFalse(9 not in self.s)
 
+    # VID 15: Testing Protocol Implementations
+    def test_protocols(self):
+        self.assertTrue(issubclass(SortedSet, Container))
 
-class TestSizeProtocol(unittest.TestCase):
+
+
+class TestSizedProtocol(unittest.TestCase):
 
     # there are only 3 interesting number in
     # com sci, 0, 1 and n
@@ -64,6 +71,13 @@ class TestSizeProtocol(unittest.TestCase):
     def test_with_duplicates(self):
         s = SortedSet([5, 5, 5, 5, 5])
         self.assertEqual(len(s), 1)
+
+    # VID 15: Test Protocols
+    # from what I understand, if you implement the
+    # abstract method listed here: https://docs.python.org/3.4/library/collections.abc.html
+    # then you implement that protocol
+    def test_sized_protocol(self):
+        self.assertTrue(issubclass(SortedSet, Sized))
 
 class TestIterableProtocol(unittest.TestCase):
 
@@ -95,6 +109,9 @@ class TestIterableProtocol(unittest.TestCase):
         #     index += 1
         for i, item in enumerate(self.s):
             self.assertEqual(item, expected[i])
+
+    def test_protocol(self):
+        self.assertTrue(issubclass(SortedSet, Iterable))
 
 
 class TestSequenceProtocol(unittest.TestCase):
@@ -202,6 +219,9 @@ class TestSequenceProtocol(unittest.TestCase):
     def test_count_dup_one(self):
         s = SortedSet([1, 5, 5, 7, 9])
         self.assertEqual(s.count(5), 1)
+
+    def test_protocol(self):
+        self.assertTrue(issubclass(SortedSet, Sequence))
 
 
 class TestReprProtocol(unittest.TestCase):
