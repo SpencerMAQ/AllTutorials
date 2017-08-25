@@ -1,5 +1,5 @@
 from bisect import bisect_left
-from collections.abc import Sequence
+from collections.abc import Sequence, Set
 from itertools import chain
 
 """
@@ -22,7 +22,7 @@ are MIXIN method unless overridden
 """
 
 
-class SortedSet(Sequence):
+class SortedSet(Sequence, Set):
     """
     Only unique elements but ordered unlike a set
     """
@@ -223,3 +223,28 @@ class SortedSet(Sequence):
     # or |, xor ^, sub -
     # the same as above: infix = same types only
     # last mixin method: isdisjoint() - tests whether they have nothing in common?
+
+    # ======== once you import from Set, fails go from 26 to 10
+    # the failing methods are the named methods
+
+    def issubset(self, iterable):
+        # <= is implemented by the inherited Set
+        return self <= SortedSet(iterable)
+
+    def issuperset(self, iterable):
+        return self >= SortedSet(iterable)
+
+    def intersection(self, iterable):
+        return self & SortedSet(iterable)
+
+    def union(self, iterable):
+        return self | SortedSet(iterable)
+
+    def symmetric_difference(self, iterable):
+        return self ^ SortedSet(iterable)
+
+    def difference(self, iterable):
+        return self - SortedSet(iterable)
+
+# End of Vid 17: Notice that we've constructed an immutable set
+

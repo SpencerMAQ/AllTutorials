@@ -1,6 +1,6 @@
 import unittest
 from collections.abc import (Container, Sized,
-                             Iterable, Sequence)
+                             Iterable, Sequence, Set)
 
 from sorted_set import SortedSet
 
@@ -444,7 +444,7 @@ class TestSetOperationsMethods(unittest.TestCase):
     def test_difference(self):
         s = SortedSet({1, 2, 3})
         t = [2, 3, 4]
-        self.assertEqual(s.intersection(t), SortedSet({1}))
+        self.assertEqual(s.difference(t), SortedSet({1}))
 
     # test isdisjoin()
     def test_isdisjoint_postitive(self):
@@ -457,7 +457,12 @@ class TestSetOperationsMethods(unittest.TestCase):
         t = [3, 4, 5]
         self.assertFalse(s.isdisjoint(t))
 
+# Vid 17: Finally, ascertain that we've implemented the set protocol
 
+class TestSetProtocol(unittest.TestCase):
+
+    def test_protocol(self):
+        self.assertTrue(issubclass(SortedSet, Set))
 
 if __name__ == '__main__':
     unittest.main()
