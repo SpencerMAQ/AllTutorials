@@ -248,3 +248,6 @@ class SortedSet(Sequence, Set):
 
 # End of Vid 17: Notice that we've constructed an immutable set
 
+# ======= VIDEO 18 IMPORTANT ====
+# If we need a mutable set, inherit from MutableSet instead
+# then you'd have to implement add() and discard()

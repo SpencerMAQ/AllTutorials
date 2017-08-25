@@ -459,6 +459,7 @@ class TestSetOperationsMethods(unittest.TestCase):
 
 # Vid 17: Finally, ascertain that we've implemented the set protocol
 
+
 class TestSetProtocol(unittest.TestCase):
 
     def test_protocol(self):
