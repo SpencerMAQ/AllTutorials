@@ -198,3 +198,28 @@ class SortedSet(Sequence):
         # or to avoid code repitition, delegate to __mul__
         # return self if other > 0 else SortedSet()
         return self * other
+
+    # =========== THE SET PROTOCOL =======
+    # Vid 17: Set protocol
+    # https://docs.python.org/3.4/library/collections.abc.html
+    # Set abstract methods: __contains__, __iter__, __len__
+    # all of them are already implemented
+
+    # Relational operators
+    # method    |   infix   |   method      |   meaning
+    # __le__    |   <=      |   issubset()  |   subset
+    # lt        |   <       |               |   proper subset
+    # eq        |   ==      |               |
+    # ne        |   !=      |
+    # gt        !   >       |               | proper superset
+    # ge        |   ?=      |   issuperset()
+    # only implements the infix operators, not the named methods
+
+    # the differences b/n operators and method:
+    # infix op: requires both to be the same type, method: any
+
+    # Algebraic/bitwise operators
+    # __and__ &
+    # or |, xor ^, sub -
+    # the same as above: infix = same types only
+    # last mixin method: isdisjoint() - tests whether they have nothing in common?
